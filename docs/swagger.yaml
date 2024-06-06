@@ -1,4 +1,316 @@
+definitions:
+  genprotos.ById:
+    properties:
+      Id:
+        type: string
+    type: object
+  genprotos.GetAllParty:
+    properties:
+      partys:
+        items:
+          $ref: '#/definitions/genprotos.Party'
+        type: array
+    type: object
+  genprotos.GetAllPublic:
+    properties:
+      publics:
+        items:
+          $ref: '#/definitions/genprotos.Public'
+        type: array
+    type: object
+  genprotos.Party:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      open_date:
+        type: string
+      slogan:
+        type: string
+    type: object
+  genprotos.Public:
+    properties:
+      birthday:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      nation:
+        type: string
+      party:
+        $ref: '#/definitions/genprotos.Party'
+    type: object
+  genprotos.Void:
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /party/GetById:
+    get:
+      consumes:
+      - application/json
+      description: GetById page
+      parameters:
+      - description: GetById
+        in: body
+        name: GetById
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.ById'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetById Successful
+          schema:
+            $ref: '#/definitions/genprotos.Party'
+        "401":
+          description: Error while GetByIdd
+          schema:
+            type: string
+      summary: GetById Party
+      tags:
+      - Party
+  /party/create:
+    post:
+      consumes:
+      - application/json
+      description: Create page
+      parameters:
+      - description: Create
+        in: body
+        name: Create
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Party'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Created
+          schema:
+            type: string
+      summary: Create Party
+      tags:
+      - Party
+  /party/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete page
+      parameters:
+      - description: Delete
+        in: body
+        name: Delete
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.ById'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delete Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Deleted
+          schema:
+            type: string
+      summary: Delete Party
+      tags:
+      - Party
+  /party/getall:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      parameters:
+      - description: GetAll
+        in: body
+        name: GetAll
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Void'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.GetAllParty'
+        "401":
+          description: Error while GetAlld
+          schema:
+            type: string
+      summary: GetAll Party
+      tags:
+      - Party
+  /party/update:
+    put:
+      consumes:
+      - application/json
+      description: Update page
+      parameters:
+      - description: Update
+        in: body
+        name: Update
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Party'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update Successful
+          schema:
+            type: string
+        "401":
+          description: Error while created
+          schema:
+            type: string
+      summary: Update Party
+      tags:
+      - Party
+  /public/GetById:
+    get:
+      consumes:
+      - application/json
+      description: GetById page
+      parameters:
+      - description: GetById
+        in: body
+        name: GetById
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.ById'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetById Successful
+          schema:
+            $ref: '#/definitions/genprotos.Public'
+        "401":
+          description: Error while GetByIdd
+          schema:
+            type: string
+      summary: GetById Public
+      tags:
+      - Public
+  /public/create:
+    post:
+      consumes:
+      - application/json
+      description: Create page
+      parameters:
+      - description: Create
+        in: body
+        name: Create
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Public'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Created
+          schema:
+            type: string
+      summary: Create Public
+      tags:
+      - Public
+  /public/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete page
+      parameters:
+      - description: Delete
+        in: body
+        name: Delete
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.ById'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delete Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Deleted
+          schema:
+            type: string
+      summary: Delete Public
+      tags:
+      - Public
+  /public/getall:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      parameters:
+      - description: GetAll
+        in: body
+        name: GetAll
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Void'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.GetAllPublic'
+        "401":
+          description: Error while GetAlld
+          schema:
+            type: string
+      summary: GetAll Public
+      tags:
+      - Public
+  /public/update:
+    put:
+      consumes:
+      - application/json
+      description: Update page
+      parameters:
+      - description: Update
+        in: body
+        name: Update
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Public'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update Successful
+          schema:
+            type: string
+        "401":
+          description: Error while created
+          schema:
+            type: string
+      summary: Update Public
+      tags:
+      - Public
 swagger: "2.0"

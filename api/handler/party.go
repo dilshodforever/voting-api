@@ -16,8 +16,6 @@ import (
 // @Success 200 {string} string  "Create Successful"
 // @Failure 401 {string} string  "Error while Created"
 // @Router /party/create [post]
-
-
 func (h *Handler) CreateParty(ctx *gin.Context){
 		arr:=pb.Party{}
 		err:=ctx.BindJSON(&arr)
@@ -41,8 +39,6 @@ func (h *Handler) CreateParty(ctx *gin.Context){
 // @Success 200 {string} string  "Update Successful"
 // @Failure 401 {string} string  "Error while created"
 // @Router /party/update [put]
-
-
 func (h *Handler) UpdateParty(ctx *gin.Context){
 	arr:=pb.Party{}
 	err:=ctx.BindJSON(&arr)
@@ -55,6 +51,8 @@ func (h *Handler) UpdateParty(ctx *gin.Context){
 	}
 	ctx.JSON(200, "Sucsess!!!")
 }
+
+
 // DeleteParty handles the creation of a new party
 // @Summary Delete Party
 // @Description Delete page
@@ -65,8 +63,6 @@ func (h *Handler) UpdateParty(ctx *gin.Context){
 // @Success 200 {string} string  "Delete Successful"
 // @Failure 401 {string} string  "Error while Deleted"
 // @Router /party/delete [delete]
-
-
 func (h *Handler) DeleteParty(ctx *gin.Context){
 	id:=pb.ById{Id: ctx.Param("id")}
 	_, err:=h.Party.DeleteParty(ctx, &id)
@@ -86,8 +82,6 @@ func (h *Handler) DeleteParty(ctx *gin.Context){
 // @Success 200 {object} pb.GetAllParty   "GetAll Successful"
 // @Failure 401 {string} string  "Error while GetAlld"
 // @Router /party/getall [get]
-
-
 func (h *Handler) GetAllParty(ctx *gin.Context){
 	res, err:=h.Party.GetAllPartys(ctx, &pb.Void{})
 	if err!=nil{
@@ -95,6 +89,7 @@ func (h *Handler) GetAllParty(ctx *gin.Context){
 	}
 	ctx.JSON(200, res)
 }
+
 // GetByIdParty handles the creation of a new party
 // @Summary GetById Party
 // @Description GetById page
@@ -105,8 +100,6 @@ func (h *Handler) GetAllParty(ctx *gin.Context){
 // @Success 200 {object} pb.Party   "GetById Successful"
 // @Failure 401 {string} string "Error while GetByIdd"
 // @Router /party/GetById [get]
-
-
 func (h *Handler) GetbyIdParty(ctx *gin.Context){
 	id:=pb.ById{Id: ctx.Param("id")}
 	res, err:=h.Party.GetByIdParty(ctx, &id)
