@@ -13,12 +13,12 @@ import (
 
 func main() {
 
-	UserConn, err := grpc.NewClient(fmt.Sprintf("localhost%s", ":50051"), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	UserConn, err := grpc.NewClient(fmt.Sprintf("localhost%s", ":8085"), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err!=nil{
 		log.Fatal("Error while NEwclient: ", err.Error())
 	}
 	defer UserConn.Close()
-	ProductConn, err := grpc.NewClient(fmt.Sprintf("localhost%s", ":50052"), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	ProductConn, err := grpc.NewClient(fmt.Sprintf("localhost%s", ":8085"), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err!=nil{
 		log.Fatal("Error while NEwclient: ", err.Error())
 	}
