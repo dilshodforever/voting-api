@@ -18,14 +18,9 @@ func main() {
 		log.Fatal("Error while NEwclient: ", err.Error())
 	}
 	defer UserConn.Close()
-	ProductConn, err := grpc.NewClient(fmt.Sprintf("localhost%s", ":8085"), grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err!=nil{
-		log.Fatal("Error while NEwclient: ", err.Error())
-	}
-	defer ProductConn.Close()
 
 	us := pb.NewPublicServiceClient(UserConn)
-	ps := pb.NewPartyServiceClient(ProductConn)
+	ps := pb.NewPartyServiceClient(UserConn)
 
 	h := handler.NewHandler(us, ps)
 	r := api.NewGin(h)
