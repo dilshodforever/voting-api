@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/party/GetById": {
+        "/PublicVote/getbyid/{id}": {
             "get": {
                 "description": "GetById page",
                 "consumes": [
@@ -25,29 +25,411 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Party"
+                    "PublicVote"
                 ],
-                "summary": "GetById Party",
+                "summary": "GetById PublicVote",
                 "parameters": [
                     {
-                        "description": "GetById",
-                        "name": "GetById",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/genprotos.ById"
-                        }
+                        "type": "string",
+                        "description": "PublicVote ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "GetById Successful",
                         "schema": {
-                            "$ref": "#/definitions/genprotos.Party"
+                            "$ref": "#/definitions/genprotos.PublicVote"
                         }
                     },
                     "401": {
                         "description": "Error while GetByIdd",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/candidate/create": {
+            "post": {
+                "description": "Create page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Candidate"
+                ],
+                "summary": "Create Candidate",
+                "parameters": [
+                    {
+                        "description": "Create",
+                        "name": "Create",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.Candidate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/candidate/delete/{id}": {
+            "delete": {
+                "description": "Delete page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Candidate"
+                ],
+                "summary": "Delete Candidate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Candidate ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while Deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/candidate/getall": {
+            "get": {
+                "description": "GetAll page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Candidate"
+                ],
+                "summary": "GetAll Candidate",
+                "responses": {
+                    "200": {
+                        "description": "GetAll Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.GetAllCandidate"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetAlld",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/candidate/getbyid/{id}": {
+            "get": {
+                "description": "GetById page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Candidate"
+                ],
+                "summary": "GetById Candidate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Candidate ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetById Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.Candidate"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetByIdd",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/candidate/update/{id}": {
+            "put": {
+                "description": "Update page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Candidate"
+                ],
+                "summary": "Update Candidate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Candidate ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update",
+                        "name": "Update",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.Candidate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/election/create": {
+            "post": {
+                "description": "Create page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Election"
+                ],
+                "summary": "Create Election",
+                "parameters": [
+                    {
+                        "description": "Create",
+                        "name": "Create",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.Election"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/election/delete/{id}": {
+            "delete": {
+                "description": "Delete page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Election"
+                ],
+                "summary": "Delete Election",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Election ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while Deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/election/getall": {
+            "get": {
+                "description": "GetAll page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Election"
+                ],
+                "summary": "GetAll Election",
+                "responses": {
+                    "200": {
+                        "description": "GetAll Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.GetAllElection"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetAlld",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/election/getbyid/{id}": {
+            "get": {
+                "description": "GetById page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Election"
+                ],
+                "summary": "GetById Election",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Election ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetById Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.Election"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetByIdd",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/election/update/{id}": {
+            "put": {
+                "description": "Update page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Election"
+                ],
+                "summary": "Update Election",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Election ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update",
+                        "name": "Update",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.Election"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while created",
                         "schema": {
                             "type": "string"
                         }
@@ -95,7 +477,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/party/delete": {
+        "/party/delete/{id}": {
             "delete": {
                 "description": "Delete page",
                 "consumes": [
@@ -110,13 +492,11 @@ const docTemplate = `{
                 "summary": "Delete Party",
                 "parameters": [
                     {
-                        "description": "Delete",
-                        "name": "Delete",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/genprotos.ById"
-                        }
+                        "type": "string",
+                        "description": "Party ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -148,17 +528,6 @@ const docTemplate = `{
                     "Party"
                 ],
                 "summary": "GetAll Party",
-                "parameters": [
-                    {
-                        "description": "GetAll",
-                        "name": "GetAll",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/genprotos.Void"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "GetAll Successful",
@@ -175,7 +544,45 @@ const docTemplate = `{
                 }
             }
         },
-        "/party/update": {
+        "/party/getbyid/{id}": {
+            "get": {
+                "description": "GetById page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Party"
+                ],
+                "summary": "GetById Party",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Party ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetById Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.Party"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetByIdd",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/party/update/{id}": {
             "put": {
                 "description": "Update page",
                 "consumes": [
@@ -189,6 +596,13 @@ const docTemplate = `{
                 ],
                 "summary": "Update Party",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Party ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
                     {
                         "description": "Update",
                         "name": "Update",
@@ -215,9 +629,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/public/GetById": {
+        "/public/cheak/{id}": {
             "get": {
-                "description": "GetById page",
+                "description": "Cheak page",
                 "consumes": [
                     "application/json"
                 ],
@@ -227,23 +641,21 @@ const docTemplate = `{
                 "tags": [
                     "Public"
                 ],
-                "summary": "GetById Public",
+                "summary": "Cheak Public",
                 "parameters": [
                     {
-                        "description": "GetById",
-                        "name": "GetById",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/genprotos.ById"
-                        }
+                        "type": "string",
+                        "description": "Public ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "GetById Successful",
+                        "description": "Cheak Successful",
                         "schema": {
-                            "$ref": "#/definitions/genprotos.Public"
+                            "type": "string"
                         }
                     },
                     "401": {
@@ -295,7 +707,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/public/delete": {
+        "/public/delete/{id}": {
             "delete": {
                 "description": "Delete page",
                 "consumes": [
@@ -310,13 +722,11 @@ const docTemplate = `{
                 "summary": "Delete Public",
                 "parameters": [
                     {
-                        "description": "Delete",
-                        "name": "Delete",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/genprotos.ById"
-                        }
+                        "type": "string",
+                        "description": "Public ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -348,17 +758,6 @@ const docTemplate = `{
                     "Public"
                 ],
                 "summary": "GetAll Public",
-                "parameters": [
-                    {
-                        "description": "GetAll",
-                        "name": "GetAll",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/genprotos.Void"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "GetAll Successful",
@@ -375,7 +774,45 @@ const docTemplate = `{
                 }
             }
         },
-        "/public/update": {
+        "/public/getbyid/{id}": {
+            "get": {
+                "description": "GetById page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Public"
+                ],
+                "summary": "GetById Public",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Public ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetById Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.Public"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetByIdd",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/public/update/{id}": {
             "put": {
                 "description": "Update page",
                 "consumes": [
@@ -389,6 +826,13 @@ const docTemplate = `{
                 ],
                 "summary": "Update Public",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Public ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
                     {
                         "description": "Update",
                         "name": "Update",
@@ -414,14 +858,216 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/public_vote/create": {
+            "post": {
+                "description": "Create page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PublicVote"
+                ],
+                "summary": "Create Public_Vote",
+                "parameters": [
+                    {
+                        "description": "Create",
+                        "name": "Create",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.PublicVote"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/publicvote/delete/{id}": {
+            "delete": {
+                "description": "Delete page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PublicVote"
+                ],
+                "summary": "Delete PublicVote",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PublicVote ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while Deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/publicvote/getall": {
+            "get": {
+                "description": "GetAll page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PublicVote"
+                ],
+                "summary": "GetAll PublicVote",
+                "responses": {
+                    "200": {
+                        "description": "GetAll Successful",
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.GetAllPublicVote"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while GetAlld",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/publicvote/update/{id}": {
+            "put": {
+                "description": "Update page",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PublicVote"
+                ],
+                "summary": "Update PublicVOTE",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PublicVOTE ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update",
+                        "name": "Update",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genprotos.PublicVote"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Successful",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Error while created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "genprotos.ById": {
+        "genprotos.Candidate": {
             "type": "object",
             "properties": {
-                "Id": {
+                "date": {
                     "type": "string"
+                },
+                "election": {
+                    "$ref": "#/definitions/genprotos.Election"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "party": {
+                    "$ref": "#/definitions/genprotos.Party"
+                },
+                "public": {
+                    "$ref": "#/definitions/genprotos.Public"
+                }
+            }
+        },
+        "genprotos.Election": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "genprotos.GetAllCandidate": {
+            "type": "object",
+            "properties": {
+                "Candidates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/genprotos.Candidate"
+                    }
+                }
+            }
+        },
+        "genprotos.GetAllElection": {
+            "type": "object",
+            "properties": {
+                "elections": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/genprotos.Election"
+                    }
                 }
             }
         },
@@ -443,6 +1089,17 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/genprotos.Public"
+                    }
+                }
+            }
+        },
+        "genprotos.GetAllPublicVote": {
+            "type": "object",
+            "properties": {
+                "publicVotes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/genprotos.PublicVote"
                     }
                 }
             }
@@ -493,8 +1150,22 @@ const docTemplate = `{
                 }
             }
         },
-        "genprotos.Void": {
-            "type": "object"
+        "genprotos.PublicVote": {
+            "type": "object",
+            "properties": {
+                "candidate": {
+                    "$ref": "#/definitions/genprotos.Candidate"
+                },
+                "election": {
+                    "$ref": "#/definitions/genprotos.Election"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "public": {
+                    "$ref": "#/definitions/genprotos.Public"
+                }
+            }
         }
     }
 }`

@@ -26,7 +26,7 @@ func (h *Handler) CreateParty(ctx *gin.Context){
 		if err!=nil{
 			panic(err)
 		}
-		ctx.JSON(200, "Sucsess!!!")
+		ctx.JSON(200, "Success!!!")
 }
 
 // UpdateParty handles the creation of a new party
@@ -35,10 +35,11 @@ func (h *Handler) CreateParty(ctx *gin.Context){
 // @Tags Party
 // @Accept  json
 // @Produce  json
+// @Param     id path string true "Party ID"
 // @Param   Update     body    pb.Party     true        "Update"
 // @Success 200 {string} string  "Update Successful"
 // @Failure 401 {string} string  "Error while created"
-// @Router /party/update [put]
+// @Router /party/update/{id} [put]
 func (h *Handler) UpdateParty(ctx *gin.Context){
 	arr:=pb.Party{}
 	err:=ctx.BindJSON(&arr)
@@ -49,7 +50,7 @@ func (h *Handler) UpdateParty(ctx *gin.Context){
 	if err!=nil{
 		panic(err)
 	}
-	ctx.JSON(200, "Sucsess!!!")
+	ctx.JSON(200, "Success!!!")
 }
 
 
@@ -59,17 +60,17 @@ func (h *Handler) UpdateParty(ctx *gin.Context){
 // @Tags Party
 // @Accept  json
 // @Produce  json
-// @Param   Delete     body    pb.ById    true        "Delete"
+// @Param     id path string true "Party ID"
 // @Success 200 {string} string  "Delete Successful"
 // @Failure 401 {string} string  "Error while Deleted"
-// @Router /party/delete [delete]
+// @Router /party/delete/{id} [delete]
 func (h *Handler) DeleteParty(ctx *gin.Context){
 	id:=pb.ById{Id: ctx.Param("id")}
 	_, err:=h.Party.DeleteParty(ctx, &id)
 	if err!=nil{
 		panic(err)
 	}
-	ctx.JSON(200, "Sucsess!!!")
+	ctx.JSON(200, "Success!!!")
 }
 
 // GetAllParty handles the creation of a new party
@@ -78,7 +79,6 @@ func (h *Handler) DeleteParty(ctx *gin.Context){
 // @Tags Party
 // @Accept  json
 // @Produce  json
-// @Param   GetAll     body    pb.Void     true        "GetAll"
 // @Success 200 {object} pb.GetAllParty   "GetAll Successful"
 // @Failure 401 {string} string  "Error while GetAlld"
 // @Router /party/getall [get]
@@ -96,10 +96,10 @@ func (h *Handler) GetAllParty(ctx *gin.Context){
 // @Tags Party
 // @Accept  json
 // @Produce  json
-// @Param   GetById     body    pb.ById     true        "GetById"
+// @Param     id path string true "Party ID"
 // @Success 200 {object} pb.Party   "GetById Successful"
 // @Failure 401 {string} string "Error while GetByIdd"
-// @Router /party/GetById [get]
+// @Router /party/getbyid/{id} [get]
 func (h *Handler) GetbyIdParty(ctx *gin.Context){
 	id:=pb.ById{Id: ctx.Param("id")}
 	res, err:=h.Party.GetByIdParty(ctx, &id)

@@ -1,8 +1,39 @@
 definitions:
-  genprotos.ById:
+  genprotos.Candidate:
     properties:
-      Id:
+      date:
         type: string
+      election:
+        $ref: '#/definitions/genprotos.Election'
+      id:
+        type: string
+      party:
+        $ref: '#/definitions/genprotos.Party'
+      public:
+        $ref: '#/definitions/genprotos.Public'
+    type: object
+  genprotos.Election:
+    properties:
+      date:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  genprotos.GetAllCandidate:
+    properties:
+      Candidates:
+        items:
+          $ref: '#/definitions/genprotos.Candidate'
+        type: array
+    type: object
+  genprotos.GetAllElection:
+    properties:
+      elections:
+        items:
+          $ref: '#/definitions/genprotos.Election'
+        type: array
     type: object
   genprotos.GetAllParty:
     properties:
@@ -16,6 +47,13 @@ definitions:
       publics:
         items:
           $ref: '#/definitions/genprotos.Public'
+        type: array
+    type: object
+  genprotos.GetAllPublicVote:
+    properties:
+      publicVotes:
+        items:
+          $ref: '#/definitions/genprotos.PublicVote'
         type: array
     type: object
   genprotos.Party:
@@ -48,37 +86,297 @@ definitions:
       party:
         $ref: '#/definitions/genprotos.Party'
     type: object
-  genprotos.Void:
+  genprotos.PublicVote:
+    properties:
+      candidate:
+        $ref: '#/definitions/genprotos.Candidate'
+      election:
+        $ref: '#/definitions/genprotos.Election'
+      id:
+        type: string
+      public:
+        $ref: '#/definitions/genprotos.Public'
     type: object
 info:
   contact: {}
 paths:
-  /party/GetById:
+  /PublicVote/getbyid/{id}:
     get:
       consumes:
       - application/json
       description: GetById page
       parameters:
-      - description: GetById
-        in: body
-        name: GetById
+      - description: PublicVote ID
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/genprotos.ById'
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: GetById Successful
           schema:
-            $ref: '#/definitions/genprotos.Party'
+            $ref: '#/definitions/genprotos.PublicVote'
         "401":
           description: Error while GetByIdd
           schema:
             type: string
-      summary: GetById Party
+      summary: GetById PublicVote
       tags:
-      - Party
+      - PublicVote
+  /candidate/create:
+    post:
+      consumes:
+      - application/json
+      description: Create page
+      parameters:
+      - description: Create
+        in: body
+        name: Create
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Candidate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Created
+          schema:
+            type: string
+      summary: Create Candidate
+      tags:
+      - Candidate
+  /candidate/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete page
+      parameters:
+      - description: Candidate ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delete Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Deleted
+          schema:
+            type: string
+      summary: Delete Candidate
+      tags:
+      - Candidate
+  /candidate/getall:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.GetAllCandidate'
+        "401":
+          description: Error while GetAlld
+          schema:
+            type: string
+      summary: GetAll Candidate
+      tags:
+      - Candidate
+  /candidate/getbyid/{id}:
+    get:
+      consumes:
+      - application/json
+      description: GetById page
+      parameters:
+      - description: Candidate ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetById Successful
+          schema:
+            $ref: '#/definitions/genprotos.Candidate'
+        "401":
+          description: Error while GetByIdd
+          schema:
+            type: string
+      summary: GetById Candidate
+      tags:
+      - Candidate
+  /candidate/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update page
+      parameters:
+      - description: Candidate ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update
+        in: body
+        name: Update
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Candidate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update Successful
+          schema:
+            type: string
+        "401":
+          description: Error while created
+          schema:
+            type: string
+      summary: Update Candidate
+      tags:
+      - Candidate
+  /election/create:
+    post:
+      consumes:
+      - application/json
+      description: Create page
+      parameters:
+      - description: Create
+        in: body
+        name: Create
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Election'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Created
+          schema:
+            type: string
+      summary: Create Election
+      tags:
+      - Election
+  /election/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete page
+      parameters:
+      - description: Election ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delete Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Deleted
+          schema:
+            type: string
+      summary: Delete Election
+      tags:
+      - Election
+  /election/getall:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.GetAllElection'
+        "401":
+          description: Error while GetAlld
+          schema:
+            type: string
+      summary: GetAll Election
+      tags:
+      - Election
+  /election/getbyid/{id}:
+    get:
+      consumes:
+      - application/json
+      description: GetById page
+      parameters:
+      - description: Election ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetById Successful
+          schema:
+            $ref: '#/definitions/genprotos.Election'
+        "401":
+          description: Error while GetByIdd
+          schema:
+            type: string
+      summary: GetById Election
+      tags:
+      - Election
+  /election/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update page
+      parameters:
+      - description: Election ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update
+        in: body
+        name: Update
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.Election'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update Successful
+          schema:
+            type: string
+        "401":
+          description: Error while created
+          schema:
+            type: string
+      summary: Update Election
+      tags:
+      - Election
   /party/create:
     post:
       consumes:
@@ -105,18 +403,17 @@ paths:
       summary: Create Party
       tags:
       - Party
-  /party/delete:
+  /party/delete/{id}:
     delete:
       consumes:
       - application/json
       description: Delete page
       parameters:
-      - description: Delete
-        in: body
-        name: Delete
+      - description: Party ID
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/genprotos.ById'
+        type: string
       produces:
       - application/json
       responses:
@@ -136,13 +433,6 @@ paths:
       consumes:
       - application/json
       description: GetAll page
-      parameters:
-      - description: GetAll
-        in: body
-        name: GetAll
-        required: true
-        schema:
-          $ref: '#/definitions/genprotos.Void'
       produces:
       - application/json
       responses:
@@ -157,12 +447,42 @@ paths:
       summary: GetAll Party
       tags:
       - Party
-  /party/update:
+  /party/getbyid/{id}:
+    get:
+      consumes:
+      - application/json
+      description: GetById page
+      parameters:
+      - description: Party ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetById Successful
+          schema:
+            $ref: '#/definitions/genprotos.Party'
+        "401":
+          description: Error while GetByIdd
+          schema:
+            type: string
+      summary: GetById Party
+      tags:
+      - Party
+  /party/update/{id}:
     put:
       consumes:
       - application/json
       description: Update page
       parameters:
+      - description: Party ID
+        in: path
+        name: id
+        required: true
+        type: string
       - description: Update
         in: body
         name: Update
@@ -183,30 +503,29 @@ paths:
       summary: Update Party
       tags:
       - Party
-  /public/GetById:
+  /public/cheak/{id}:
     get:
       consumes:
       - application/json
-      description: GetById page
+      description: Cheak page
       parameters:
-      - description: GetById
-        in: body
-        name: GetById
+      - description: Public ID
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/genprotos.ById'
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: GetById Successful
+          description: Cheak Successful
           schema:
-            $ref: '#/definitions/genprotos.Public'
+            type: string
         "401":
           description: Error while GetByIdd
           schema:
             type: string
-      summary: GetById Public
+      summary: Cheak Public
       tags:
       - Public
   /public/create:
@@ -235,18 +554,17 @@ paths:
       summary: Create Public
       tags:
       - Public
-  /public/delete:
+  /public/delete/{id}:
     delete:
       consumes:
       - application/json
       description: Delete page
       parameters:
-      - description: Delete
-        in: body
-        name: Delete
+      - description: Public ID
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/genprotos.ById'
+        type: string
       produces:
       - application/json
       responses:
@@ -266,13 +584,6 @@ paths:
       consumes:
       - application/json
       description: GetAll page
-      parameters:
-      - description: GetAll
-        in: body
-        name: GetAll
-        required: true
-        schema:
-          $ref: '#/definitions/genprotos.Void'
       produces:
       - application/json
       responses:
@@ -287,12 +598,42 @@ paths:
       summary: GetAll Public
       tags:
       - Public
-  /public/update:
+  /public/getbyid/{id}:
+    get:
+      consumes:
+      - application/json
+      description: GetById page
+      parameters:
+      - description: Public ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetById Successful
+          schema:
+            $ref: '#/definitions/genprotos.Public'
+        "401":
+          description: Error while GetByIdd
+          schema:
+            type: string
+      summary: GetById Public
+      tags:
+      - Public
+  /public/update/{id}:
     put:
       consumes:
       - application/json
       description: Update page
       parameters:
+      - description: Public ID
+        in: path
+        name: id
+        required: true
+        type: string
       - description: Update
         in: body
         name: Update
@@ -313,4 +654,105 @@ paths:
       summary: Update Public
       tags:
       - Public
+  /public_vote/create:
+    post:
+      consumes:
+      - application/json
+      description: Create page
+      parameters:
+      - description: Create
+        in: body
+        name: Create
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.PublicVote'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Created
+          schema:
+            type: string
+      summary: Create Public_Vote
+      tags:
+      - PublicVote
+  /publicvote/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete page
+      parameters:
+      - description: PublicVote ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delete Successful
+          schema:
+            type: string
+        "401":
+          description: Error while Deleted
+          schema:
+            type: string
+      summary: Delete PublicVote
+      tags:
+      - PublicVote
+  /publicvote/getall:
+    get:
+      consumes:
+      - application/json
+      description: GetAll page
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetAll Successful
+          schema:
+            $ref: '#/definitions/genprotos.GetAllPublicVote'
+        "401":
+          description: Error while GetAlld
+          schema:
+            type: string
+      summary: GetAll PublicVote
+      tags:
+      - PublicVote
+  /publicvote/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update page
+      parameters:
+      - description: PublicVOTE ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update
+        in: body
+        name: Update
+        required: true
+        schema:
+          $ref: '#/definitions/genprotos.PublicVote'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update Successful
+          schema:
+            type: string
+        "401":
+          description: Error while created
+          schema:
+            type: string
+      summary: Update PublicVOTE
+      tags:
+      - PublicVote
 swagger: "2.0"

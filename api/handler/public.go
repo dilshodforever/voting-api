@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"log"
 	pb "root/genprotos"
 
 	"github.com/gin-gonic/gin"
@@ -35,12 +36,13 @@ func (h *Handler) CreatePublic(ctx *gin.Context){
 // @Tags Public
 // @Accept  json
 // @Produce  json
+// @Param     id path string true "Public ID"
 // @Param   Update     body    pb.Public     true        "Update"
 // @Success 200 {string} string  "Update Successful"
 // @Failure 401 {string} string  "Error while created"
-// @Router /public/update [put]
+// @Router /public/update/{id} [put]
 func (h *Handler) UpdatePublic(ctx *gin.Context){
-	arr:=pb.Public{}
+	arr:=pb.Public{Id: ctx.Param("id")}
 	err:=ctx.BindJSON(&arr)
 	if err!=nil{
 		panic(err)
@@ -58,10 +60,10 @@ func (h *Handler) UpdatePublic(ctx *gin.Context){
 // @Tags Public
 // @Accept  json
 // @Produce  json
-// @Param   Delete     body    pb.ById    true        "Delete"
+// @Param     id path string true "Public ID"
 // @Success 200 {string} string  "Delete Successful"
 // @Failure 401 {string} string  "Error while Deleted"
-// @Router /public/delete [delete]
+// @Router /public/delete/{id} [delete]
 func (h *Handler) DeletePublic(ctx *gin.Context){
 	id:=pb.ById{Id: ctx.Param("id")}
 	_, err:=h.Public.DeletePublic(ctx, &id)
@@ -78,16 +80,10 @@ func (h *Handler) DeletePublic(ctx *gin.Context){
 // @Tags Public
 // @Accept  json
 // @Produce  json
-// @Param   GetAll     body    pb.Void     true        "GetAll"
 // @Success 200 {object} pb.GetAllPublic   "GetAll Successful"
 // @Failure 401 {string} string  "Error while GetAlld"
 // @Router /public/getall [get]
 func (h *Handler) GetAllPublic(ctx *gin.Context){
-	arr:=pb.Public{}
-	err:=ctx.BindJSON(&arr)
-	if err!=nil{
-		panic(err)
-	}
 	res, err:=h.Public.GetAllPublics(ctx, &pb.Void{})
 	if err!=nil{
 		panic(err)
@@ -101,10 +97,10 @@ func (h *Handler) GetAllPublic(ctx *gin.Context){
 // @Tags Public
 // @Accept  json
 // @Produce  json
-// @Param   GetById     body    pb.ById     true        "GetById"
+// @Param     id path string true "Public ID"
 // @Success 200 {object} pb.Public   "GetById Successful"
 // @Failure 401 {string} string "Error while GetByIdd"
-// @Router /public/GetById [get]
+// @Router /public/getbyid/{id} [get]
 func (h *Handler) GetbyIdPublic(ctx *gin.Context){
 	id:=pb.ById{Id: ctx.Param("id")}
 	res, err:=h.Public.GetByIdPublic(ctx, &id)
@@ -112,4 +108,25 @@ func (h *Handler) GetbyIdPublic(ctx *gin.Context){
 		panic(err)
 	}
 	ctx.JSON(200, res)
+}
+
+
+// CheakPublic handles the creation of a new Public
+// @Summary Cheak Public
+// @Description Cheak page
+// @Tags Public
+// @Accept  json
+// @Produce  json
+// @Param     id path string true "Public ID"
+// @Success 200 {string} string  "Cheak Successful"
+// @Failure 401 {string} string "Error while GetByIdd"
+// @Router /public/cheak/{id} [get]
+func (h *Handler) CheakPublic(ctx *gin.Context){
+	id:=pb.ById{Id: ctx.Param("id")}
+	_, err:=h.Public.CheakPublic(ctx, &id)
+	if err!=nil{
+		ctx.JSON(400, "Yosh yoki Millat mos kelmadi")
+		log.Fatal("Error while Cheak: ", err.Error())
+	}
+	ctx.JSON(200, "Successs")
 }

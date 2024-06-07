@@ -21,8 +21,11 @@ func main() {
 
 	us := pb.NewPublicServiceClient(UserConn)
 	ps := pb.NewPartyServiceClient(UserConn)
+	ca :=pb.NewCandidateServiceClient(UserConn)
+	el :=pb.NewElectionServiceClient(UserConn)
+	pub :=pb.NewPublicVoteServiceClient(UserConn)
 
-	h := handler.NewHandler(us, ps)
+	h := handler.NewHandler(us, ps, ca, el, pub)
 	r := api.NewGin(h)
 
 	fmt.Println("Server started on port:8080")
