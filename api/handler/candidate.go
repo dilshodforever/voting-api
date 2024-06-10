@@ -83,7 +83,12 @@ func (h *Handler) DeleteCandidate(ctx *gin.Context){
 // @Failure 401 {string} string  "Error while GetAlld"
 // @Router /candidate/getall [get]
 func (h *Handler) GetAllCandidate(ctx *gin.Context){
-	res, err:=h.Candidate.GetAllCandidates(ctx, &pb.Void{})
+	can:=&pb.Candidate{}
+	err:=ctx.BindJSON(&can)
+	if err!=nil{
+		panic(err)
+	}
+	res, err:=h.Candidate.GetAllCandidates(ctx, can)
 	if err!=nil{
 		panic(err)
 	}

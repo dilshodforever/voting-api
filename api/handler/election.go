@@ -83,7 +83,12 @@ func (h *Handler) DeleteElection(ctx *gin.Context){
 // @Failure 401 {string} string  "Error while GetAlld"
 // @Router /election/getall [get]
 func (h *Handler) GetAllElection(ctx *gin.Context){
-	res, err:=h.Election.GetAllElections(ctx, &pb.Void{})
+	arr:=&pb.Election{}
+	err:=ctx.BindJSON(&arr)
+	if err!=nil{
+		panic(err)
+	}
+	res, err:=h.Election.GetAllElections(ctx, arr)
 	if err!=nil{
 		panic(err)
 	}

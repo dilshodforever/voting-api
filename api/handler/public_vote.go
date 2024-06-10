@@ -83,7 +83,12 @@ func (h *Handler) DeletePublicVote(ctx *gin.Context){
 // @Failure 401 {string} string  "Error while GetAlld"
 // @Router /publicvote/getall [get]
 func (h *Handler) GetAllPublicVote(ctx *gin.Context){
-	res, err:=h.PublicVote.GetAllPublucVotes(ctx, &pb.Void{})
+	arr:=&pb.PublicVote{}
+	err:=ctx.BindJSON(&arr)
+	if err!=nil{
+		panic(err)
+	}
+	res, err:=h.PublicVote.GetAllPublucVotes(ctx, arr)
 	if err!=nil{
 		panic(err)
 	}

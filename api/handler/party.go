@@ -83,7 +83,12 @@ func (h *Handler) DeleteParty(ctx *gin.Context){
 // @Failure 401 {string} string  "Error while GetAlld"
 // @Router /party/getall [get]
 func (h *Handler) GetAllParty(ctx *gin.Context){
-	res, err:=h.Party.GetAllPartys(ctx, &pb.Void{})
+	arr:=&pb.Party{}
+	err:=ctx.BindJSON(&arr)
+	if err!=nil{
+		panic(err)
+	}
+	res, err:=h.Party.GetAllPartys(ctx, arr)
 	if err!=nil{
 		panic(err)
 	}

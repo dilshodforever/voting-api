@@ -84,7 +84,12 @@ func (h *Handler) DeletePublic(ctx *gin.Context){
 // @Failure 401 {string} string  "Error while GetAlld"
 // @Router /public/getall [get]
 func (h *Handler) GetAllPublic(ctx *gin.Context){
-	res, err:=h.Public.GetAllPublics(ctx, &pb.Void{})
+	arr:=&pb.Public{}
+	err:=ctx.BindJSON(&arr)
+	if err!=nil{
+		panic(err)
+	}
+	res, err:=h.Public.GetAllPublics(ctx, arr)
 	if err!=nil{
 		panic(err)
 	}
